@@ -1,0 +1,38 @@
+Error Level Analysis (ELA)
+Bu proje, dijital görüntüler üzerindeki manipülasyonları, kopyala-yapıştır sahtekarlıklarını 
+ve doku değişimlerini çıplak matematikle tespit etmeyi amaçlayan bir dijital adli bilişim (digital forensics) aracıdır.
+
+ELA (Error Level Analysis) Nedir ve Ne İşe Yarar?
+Error Level Analysis (Hata Seviyesi Analizi), bir fotoğrafın pikselleri arasındaki "sıkıştırma yorgunluğunu" ölçen bir teşhis yöntemidir.
+JPEG formatı doğası gereği "kayıplı" (lossy) bir sıkıştırma algoritması kullanır.
+Bir fotoğraf makineden veya telefondan ilk çıktığında tüm pikseller aynı oranda sıkıştırılmıştır.
+Ancak bu fotoğrafın içine başka bir kaynaktan bir nesne yapıştırılırsa (Photoshop, Deepfake vb.), sonradan eklenen bu piksellerin sıkıştırma geçmişi orijinal arka planla uyuşmaz.
+ELA, insan gözünün göremediği bu matematiksel uyumsuzluğu, karanlıkta parlayan bir UV ışığı gibi ortaya çıkarır.
+
+Hangi Amaçlarla Kullanılır?
+Siber Güvenlik ve Adli Bilişim (Forensics): Şüpheli dijital kanıtların (fotoğrafların) mahkemede veya soruşturmada orijinalliğini doğrulamak.
+
+OSINT (Açık Kaynak İstihbaratı): Sosyal medyada yayılan dezenformasyon ve manipüle edilmiş haber görsellerinin sahteliğini kanıtlamak.
+
+Deepfake ve Sentetik Veri Tespiti: Yapay zeka ile üretilmiş veya yüzü değiştirilmiş görsellerdeki doku anormalliklerini saptamak.
+
+Biz Bu Sistemi Nasıl Tasarladık?
+Bu projede, kapalı kutu (black-box) siber güvenlik veya görüntü işleme kütüphanelerinin hazır "sihirli" filtreleri kasıtlı olarak reddedilmiştir. 
+Algoritma, piksellerin ham matematiksel değerleri üzerinden sıfırdan inşa edilmiştir.
+
+Mühendislik Yaklaşımımız:
+
+Matris Çıkarımı: Orijinal görsel numpy kullanılarak bilgisayarın anlayacağı 3 boyutlu (RGB) bir sayı matrisine dönüştürülür.
+
+Sanal Sıkıştırma (Provokasyon): Görselin kalitesi kasıtlı olarak %90'a düşürülerek sanal belleğe yeniden kaydedilir. 
+Bu işlem, manipüle edilmiş pikselleri farklı bir tepki vermeye zorlar.
+
+Veri Tipi Yönetimi (Anti-Underflow): Bilgisayarların pikselleri sakladığı standart uint8 (0-255) formatında çıkarma işlemi yapmak,
+eksi değerlerde sistemin çökmesine veya hatalı (underflow) veriler üretmesine neden olur. 
+Bu mimari tuzağı aşmak için matrisler işlem anında int16 formatına genişletilir.
+
+Kriminal Matematik: İki matrisin mutlak farkı alınır. Ortaya çıkan çok küçük sapma değerleri, belirli bir çarpan katsayısıyla ölçeklendirilir 
+ve np.clip fonksiyonu ile güvenli bir şekilde 255 sınırında tutularak ekrana "Isı Haritası" (Röntgen) olarak basılır.
+
+Sonuç olarak sistem; orijinal bölgeleri karanlık bırakırken, sonradan eklenen veya manipüle edilen pikselleri 
+ELA haritası üzerinde fosforlu bir gürültü lekesi olarak görünür kılar.

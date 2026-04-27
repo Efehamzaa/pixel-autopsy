@@ -1,0 +1,7 @@
+__pycache__/
+gecici_kopya.jpg
+data/raw/*
+data/processed/*
+.vscode/
+models/*.pkl
+models/*.h5

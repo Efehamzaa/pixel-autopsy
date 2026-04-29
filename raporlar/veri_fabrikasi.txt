@@ -1,0 +1,21 @@
+Veri Üretim Fabrikası (Otomasyon ve Ölçeklendirme)
+Piksel Otopsisi projesinin bu aşamasında, tekil olarak çalışan ELA motoru, Makine Öğrenmesi (Machine Learning) algoritmalarını
+eğitebilmek amacıyla devasa bir seri üretim bandına dönüştürülmüştür. Yapay zekâ modelleri, karar sınırlarını (decision boundaries) çizebilmek 
+için binlerce örneğe ihtiyaç duyar. Bu nedenle manuel süreçler otomatize edilmiştir.
+
+Çözülen Mühendislik Problemleri:
+
+Sınıf Dengesizliği (Class Imbalance) Koruması: Veri setinde (CASIA) bulunan 7000'den fazla manipüle edilmiş görsele karşılık, 
+orijinal görsellerin azlığı modelin "ezberlemesine" (overfitting) yol açacaktı. Veri fabrikası algoritması, 
+her iki sınıftan da tam 1000'er adet fotoğraf işleyerek veri setini %50-%50 oranında dengede tutacak şekilde sınırlandırılmıştır.
+
+Veri Temizliği (Format Filtreleme): ELA (Error Level Analysis) algoritması, doğası gereği yalnızca kayıplı (lossy) sıkıştırma 
+yapan JPEG formatında çalışır. Yazılan otomasyon kodu, kayıpsız olan .TIF veya .PNG formatlarını otomatik olarak tespit edip atlayarak 
+(bypass) sistemin kirlenmesini ve çökmesini engeller.
+
+İşletim Sistemi Entegrasyonu: os kütüphanesi kullanılarak, klasörler arası veri akışı sağlanmış; ham fotoğraflar (raw) okunup,
+ ELA fonksiyonlarından geçirildikten sonra sonuçlar etiketli klasörlere (processed/authentic ve processed/tampered) otomatik olarak 
+yönlendirilmiştir.
+
+Çıktı: Bu otomasyon sonucunda, sıfır insan müdahalesi ile dakikalar içinde 2000 adet adli bilişim (ELA) röntgeni üretilmiş ve sistem 
+"Faz 2.2: Özellik Çıkarımı (Feature Extraction)" aşamasına hazır hale getirilmiştir.

@@ -1,7 +1,25 @@
+# --- Python ve Ortam Dosyaları ---
 __pycache__/
-gecici_kopya.jpg
-data/raw/*
-data/processed/*
+*.py[cod]
+venv/
+.venv/
+
+# --- Veri ve Model Dosyaları ---
+*.csv
+*.pkl
+data/veri_seti.csv
+data/model.pkl
+
+# --- RESİMLER (Görsel Veri Setleri) ---
+# data/processed içindeki tüm resim klasörlerini engeller
+data/processed/authentic/
+data/processed/tampered/
+# Genel resim uzantılarını engeller
+*.jpg
+*.jpeg
+*.png
+*.bmp
+
+# --- IDE Dosyaları ---
 .vscode/
-models/*.pkl
-models/*.h5
+.idea/
